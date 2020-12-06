@@ -3,7 +3,7 @@ import { Card, Button, Container, Row, Col } from "react-bootstrap";
 import Navhome from "../navhome/Navhome";
 
 import "./Home.css";
-import codename from "../codename/assets/image/logo/logo.svg";
+import codename from "../../codename/assets/image/logo/logo.svg";
 
 class Home extends Component {
   constructor(props) {
