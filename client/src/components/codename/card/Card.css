@@ -1,2 +1,75 @@
-.background {
+@media (min-width: 1315px) {
+  .five-col-md {
+    margin: 0 1% 0 1%;
+  }
+}
+
+@media (min-width: 1375px) {
+  .five-col-lg {
+    margin: 0 2% 0 2%;
+  }
+}
+
+@media (min-width: 1580px) {
+  .five-col-xl {
+    margin: 0 3% 0 3%;
+  }
+}
+
+.size-card {
+  width: 190px;
+  height: 90px;
+}
+
+.card-r:hover {
+  cursor: pointer;
+  background-image: url("../../../image/card/red-team.png");
+  transition: background-image 0s 0s;
+}
+
+.card-b:hover {
+  cursor: pointer;
+  background-image: url("../../../image/card/blue-team.png");
+  transition: background-image 0s 0s;
+}
+
+.word-style {
+  font-size: 20px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 5px;
+  line-height: 90px;
+  vertical-align: middle;
+  padding: 0 5px 0 5px;
+}
+
+.background-witness {
+  background-image: url("../../../image/card/witness.png");
+}
+
+.background-red-team {
+  background-image: url("../../../image/card/red-team.png");
+}
+
+.background-blue-team {
+  background-image: url("../../../image/card/blue-team.png");
+}
+
+.background-killer {
+  background-image: url("../../../image/card/killer.png");
+}
+
+.background-_witness {
+  background-image: url("../../../image/card/_witness.png");
+}
+
+.background-_red-team {
+  background-image: url("../../../image/card/_red-team.png");
+}
+
+.background-_blue-team {
+  background-image: url("../../../image/card/_blue-team.png");
+}
+
+.background-_killer {
+  background-image: url("../../../image/card/_killer.png");
 }
