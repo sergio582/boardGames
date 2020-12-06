@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import Home from "./components/main/home/Home";
-import Table from "./components/codename/table/Table";
+import Rules from "./components/codename/rules/Rules";
 
 import "./App.css";
 
@@ -13,8 +13,8 @@ function App() {
           <Route path="/about">
             <Home />
           </Route>
-          <Route path="/codename">
-            <Table view="mg" />
+          <Route path="/codename/rules">
+            <Rules />
           </Route>
           <Route path="/">
             <Home />

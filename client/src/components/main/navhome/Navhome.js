@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Navbar, Nav } from "react-bootstrap";
 
+import logo from "../mainLogo.svg";
+
 import "./Navhome.css";
 
 class Navhome extends Component {
@@ -13,10 +15,10 @@ class Navhome extends Component {
       <div>
         <Navbar bg="dark" variant="dark">
           <Navbar.Brand href="/">
-            <img alt="Logo" src="./mainLogo.svg" width="50" height="50" className="d-inline-block align-center mr-2" /> BoardGames
+            <img alt="Logo" src={logo} width="50" height="50" className="d-inline-block align-center mr-2" /> BoardGames
           </Navbar.Brand>
           <Nav className="mr-auto">
-            <Nav.Link href="/codename">Code Name</Nav.Link>
+            <Nav.Link href="/codename/rules">Code Name (Règles)</Nav.Link>
           </Nav>
         </Navbar>
       </div>
