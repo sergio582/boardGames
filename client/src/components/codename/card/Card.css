@@ -23,13 +23,13 @@
 
 .card-r:hover {
   cursor: pointer;
-  background-image: url("../../../image/card/red-team.png");
+  background-image: url("../assets/image/card/red-team.png");
   transition: background-image 0s 0s;
 }
 
 .card-b:hover {
   cursor: pointer;
-  background-image: url("../../../image/card/blue-team.png");
+  background-image: url("../assets/image/card/blue-team.png");
   transition: background-image 0s 0s;
 }
 
@@ -43,33 +43,33 @@
 }
 
 .background-witness {
-  background-image: url("../../../image/card/witness.png");
+  background-image: url("../assets/image/card/witness.png");
 }
 
 .background-red-team {
-  background-image: url("../../../image/card/red-team.png");
+  background-image: url("../assets/image/card/red-team.png");
 }
 
 .background-blue-team {
-  background-image: url("../../../image/card/blue-team.png");
+  background-image: url("../assets/image/card/blue-team.png");
 }
 
 .background-killer {
-  background-image: url("../../../image/card/killer.png");
+  background-image: url("../assets/image/card/killer.png");
 }
 
 .background-_witness {
-  background-image: url("../../../image/card/_witness.png");
+  background-image: url("../assets/image/card/_witness.png");
 }
 
 .background-_red-team {
-  background-image: url("../../../image/card/_red-team.png");
+  background-image: url("../assets/image/card/_red-team.png");
 }
 
 .background-_blue-team {
-  background-image: url("../../../image/card/_blue-team.png");
+  background-image: url("../assets/image/card/_blue-team.png");
 }
 
 .background-_killer {
-  background-image: url("../../../image/card/_killer.png");
+  background-image: url("../assets/image/card/_killer.png");
 }
