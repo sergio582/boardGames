@@ -17,7 +17,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-//GET BY ID
+//GET BY ID MONGO
 // router.get("/:id", async (req, res) => {
 //   try {
 //     const word = await Word.findById(req.params.id);
@@ -43,7 +43,6 @@ router.post("/", async (req, res) => {
     id: req.body.id,
     word: req.body.word,
   });
-
   try {
     const wordSave = await word.save();
     res.json(wordSave);
