@@ -9,7 +9,7 @@ class Card extends Component {
   }
 
   handleClick(e) {
-    console.log(this.props.id);
+    console.log(this.props.word);
   }
 
   render() {

@@ -6,7 +6,7 @@ const cors = require("cors");
 require("dotenv/config");
 
 //ROUTES
-const wordRoutes = require("./routes/wordRoutes");
+const wordRoutes = require("./routes/codename/wordRoutes");
 
 //MIDDLEWARE
 app.use(cors());

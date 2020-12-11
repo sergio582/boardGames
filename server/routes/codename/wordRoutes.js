@@ -1,6 +1,6 @@
 //IMPORTS
 const express = require("express");
-const Word = require("../model/Word");
+const Word = require("../../model/codename/Word");
 
 //MIDDLEWARE
 const router = express.Router();
