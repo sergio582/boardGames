@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import Connection from "./components/main/connection/Connection";
-import Signin from "./components/main/signin/Signin";
+import Register from "./components/main/register/Register";
 import Home from "./components/main/home/Home";
 import Rules from "./components/codename/rules/Rules";
 import Table from "./components/codename/table/Table";
@@ -25,8 +25,8 @@ function App() {
           <Route path="/home">
             <Home />
           </Route>
-          <Route path="/signin">
-            <Signin />
+          <Route path="/signup">
+            <Register />
           </Route>
           <Route path="/">
             <Connection />

@@ -8,7 +8,27 @@ import "./Connection.css";
 class Connection extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      email: "",
+      password: "",
+      errors: {},
+    };
   }
+
+  onChange = (e) => {
+    this.setState({ [e.target.id]: e.target.value });
+  };
+
+  onSubmit = (e) => {
+    e.preventDefault();
+
+    const userData = {
+      email: this.state.email,
+      password: this.state.password,
+    };
+
+    console.log(userData);
+  };
 
   render() {
     return (
@@ -21,10 +41,10 @@ class Connection extends Component {
                 <Card.Title>Connexion à Boar Games</Card.Title>
                 <Form>
                   <Form.Group controlId="formBasicEmail">
-                    <Form.Control type="email" placeholder="Email" />
+                    <Form.Control type="email" placeholder="Email" onChange={this.onChange} value={this.state.pseudo} id="pseudo" />
                   </Form.Group>
                   <Form.Group controlId="formBasicPassword">
-                    <Form.Control type="password" placeholder="Password" />
+                    <Form.Control type="password" placeholder="Password" onChange={this.onChange} value={this.state.password} id="password" />
                   </Form.Group>
                   <Button className="button-connect">Connexion</Button>
                 </Form>
@@ -34,12 +54,12 @@ class Connection extends Component {
         </Row>
         <Row className="mt-3">
           <Col>
-            <text>
+            <span>
               Pas de compte ?
-              <a href="/signin" className="link-signin box-shadow-red ml-1 mr-1">
+              <a href="/signup" className="link-signin box-shadow-red ml-1 mr-1">
                 S'inscrire
               </a>
-            </text>
+            </span>
           </Col>
         </Row>
       </Container>

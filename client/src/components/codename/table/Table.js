@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Container, Row } from "react-bootstrap";
-import { getListWords, getWords } from "../../../services/api/codename/wordApi";
+import { getListWords } from "../../../services/api/codename/wordApi";
 
 import Card from "../card/Card";
 
