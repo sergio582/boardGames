@@ -1,5 +1,7 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
+import Connection from "./components/main/connection/Connection";
+import Signin from "./components/main/signin/Signin";
 import Home from "./components/main/home/Home";
 import Rules from "./components/codename/rules/Rules";
 import Table from "./components/codename/table/Table";
@@ -20,8 +22,14 @@ function App() {
           <Route path="/codename/">
             <Table />
           </Route>
-          <Route path="/">
+          <Route path="/home">
             <Home />
+          </Route>
+          <Route path="/signin">
+            <Signin />
+          </Route>
+          <Route path="/">
+            <Connection />
           </Route>
         </Switch>
       </Router>

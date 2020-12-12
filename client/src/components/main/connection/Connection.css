@@ -1,0 +1,24 @@
+.logo-style {
+  width: 150px;
+  height: 150px;
+}
+
+.button-connect {
+  color: #e5646e !important;
+  background-color: white !important;
+  border-color: #e5646e !important;
+}
+
+.button-connect:hover {
+  color: white !important;
+  background-color: #e5646e !important;
+  border-color: #e5646e !important;
+}
+
+.link-signin {
+  color: #e5646e;
+}
+
+.link-signin:hover {
+  color: #e5646e;
+}
