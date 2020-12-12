@@ -1,6 +1,6 @@
 //IMPORTS
 const express = require("express");
-const Word = require("../model/Word");
+const User = require("../../model/main/User");
 
 //MIDDLEWARE
 const router = express.Router();
@@ -9,8 +9,8 @@ const router = express.Router();
 //GET ALL
 router.get("/", async (req, res) => {
   try {
-    var words = await Word.find();
-    res.json(words);
+    var users = await User.find();
+    res.json(users);
   } catch (err) {
     console.log(err);
     res.json({ message: err });
@@ -18,20 +18,10 @@ router.get("/", async (req, res) => {
 });
 
 //GET BY ID MONGO
-// router.get("/:id", async (req, res) => {
-//   try {
-//     const word = await Word.findById(req.params.id);
-//     res.json(word);
-//   } catch (err) {
-//     res.json({ message: err });
-//   }
-// });
-
-//GET BY REAL ID
 router.get("/:id", async (req, res) => {
   try {
-    const word = await Word.find({ id: req.params.id });
-    res.json(word);
+    const user = await User.findById(req.params.id);
+    res.json(user);
   } catch (err) {
     res.json({ message: err });
   }
@@ -39,13 +29,14 @@ router.get("/:id", async (req, res) => {
 
 //POST NEW
 router.post("/", async (req, res) => {
-  const word = new Word({
-    id: req.body.id,
-    word: req.body.word,
+  const user = new User({
+    pseudo: req.body.pseudo,
+    password: req.body.password,
+    email: req.body.email,
   });
   try {
-    const wordSave = await word.save();
-    res.json(wordSave);
+    const userSave = await user.save();
+    res.json(userSave);
   } catch (err) {
     res.json({ message: err });
   }
@@ -54,8 +45,8 @@ router.post("/", async (req, res) => {
 //DELETE BY ID
 router.delete("/:id", async (req, res) => {
   try {
-    const wordRemove = await Word.deleteOne({ _id: req.params.id });
-    res.json(wordRemove);
+    const userRemove = await User.deleteOne({ _id: req.params.id });
+    res.json(userRemove);
   } catch (err) {
     res.json({ message: err });
   }
