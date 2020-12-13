@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Container, Row } from "react-bootstrap";
-import { getListWords, getWords } from "../../../services/api/codename/wordApi";
+import { getListWords } from "../../../services/api/codename/wordApi";
 
 import Card from "../card/Card";
 
@@ -22,10 +22,10 @@ class Table extends Component {
 
   async generateList() {
     const list = [];
-    for (var i = 1; i < 26; i++) {
-      var a = this.getRandomInt(1, 1630);
+    for (let i = 1; i < 26; i++) {
+      let a = this.getRandomInt(1, 1630);
       list.push(a);
-      for (var y = 0; y < list.length - 1; y++) {
+      for (let y = 0; y < list.length - 1; y++) {
         if (a === list[y]) {
           i = i - 1;
           list.pop();

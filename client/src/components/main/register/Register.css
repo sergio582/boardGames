@@ -22,3 +22,13 @@
 .link-connect:hover {
   color: #e5646e;
 }
+
+.success-title {
+  color: #6ee564;
+  font-size: 20px;
+}
+
+.error-title {
+  color: #e5646e;
+  font-size: 20px;
+}

@@ -1,6 +1,8 @@
-const User = require("../model/main/User");
+const User = require("../../model/main/User");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+
+const emailRegexp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 
 const createJWT = (email, userId, duration) => {
   const payload = {
@@ -13,40 +15,27 @@ const createJWT = (email, userId, duration) => {
   });
 };
 
-const emailRegexp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+exports.getUsers = (req, res) => {
+  User.find({}, (err, users) => {
+    err === null ? res.json(users) : res.json({ message: err });
+  });
+};
 
 exports.signup = (req, res, next) => {
   let { pseudo, email, password, password_confirmation } = req.body;
 
-  let errors = [];
-  if (!pseudo) {
-    errors.push({ name: "required" });
-  }
-  if (!email) {
-    errors.push({ email: "required" });
-  }
   if (!emailRegexp.test(email)) {
-    errors.push({ email: "invalid" });
+    return res.json({ errors: "Email invalide" });
   }
-  if (!password) {
-    errors.push({ password: "required" });
-  }
-  if (!password_confirmation) {
-    errors.push({
-      password_confirmation: "required",
-    });
-  }
+
   if (password != password_confirmation) {
-    errors.push({ password: "mismatch" });
-  }
-  if (errors.length > 0) {
-    return res.status(422).json({ errors: errors });
+    return res.json({ errors: "Les mots de passe ne correspondent pas !" });
   }
 
   User.findOne({ email: email })
     .then((user) => {
       if (user) {
-        return res.status(422).json({ errors: [{ user: "email already exists" }] });
+        return res.json({ errors: "Email existant" });
       } else {
         const user = new User({
           pseudo: pseudo,
@@ -84,32 +73,22 @@ exports.signup = (req, res, next) => {
 exports.signin = (req, res) => {
   let { email, password } = req.body;
 
-  let errors = [];
-  if (!email) {
-    errors.push({ email: "required" });
-  }
   if (!emailRegexp.test(email)) {
-    errors.push({ email: "invalid email" });
-  }
-  if (!password) {
-    errors.push({ passowrd: "required" });
-  }
-  if (errors.length > 0) {
-    return res.status(422).json({ errors: errors });
+    return res.json({ errors: "Email invalide" });
   }
 
   User.findOne({ email: email })
     .then((user) => {
       if (!user) {
-        return res.status(404).json({
-          errors: [{ user: "not found" }],
+        return res.json({
+          errors: "Utilisateur non trouvé !",
         });
       } else {
         bcrypt
           .compare(password, user.password)
           .then((isMatch) => {
             if (!isMatch) {
-              return res.status(400).json({ errors: [{ password: "incorrect" }] });
+              return res.json({ errors: "Mot de passe incorrect !" });
             }
             let access_token = createJWT(user.email, user._id, 3600);
             jwt.verify(access_token, process.env.TOKEN_SECRET, (err, decoded) => {

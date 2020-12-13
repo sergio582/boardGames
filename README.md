@@ -1,9 +1,16 @@
-# codeName
+# Board Game 🎲
 
-Code name game in react
+React web site / node REST api for board games with :
 
-## Avaliable Scripts
+- Code name ⁉
+- and more comming soon ... 🤫
 
-To install project run :
+## Avaliable Client Scripts 🖥️
 
-- npm install
+- To install client project run : `npm install`
+- To launch client project run : `npm start`
+
+## Avaliable Server Scripts 🖥️
+
+- To install server project run : `npm install`
+- To launch server project run : `npm start`

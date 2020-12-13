@@ -1,10 +1,9 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import Connection from "./components/main/connection/Connection";
-import Signin from "./components/main/signin/Signin";
+import Register from "./components/main/register/Register";
 import Home from "./components/main/home/Home";
-import Rules from "./components/codename/rules/Rules";
-import Table from "./components/codename/table/Table";
+import HomeCodeName from "./components/codename/home/HomeCodeName";
 
 import "./App.css";
 
@@ -13,23 +12,17 @@ function App() {
     <div className="App">
       <Router>
         <Switch>
-          <Route path="/about">
-            <Home />
+          <Route path="/codename">
+            <HomeCodeName />
           </Route>
-          <Route path="/codename/rules">
-            <Rules />
-          </Route>
-          <Route path="/codename/">
-            <Table />
-          </Route>
-          <Route path="/home">
-            <Home />
+          <Route path="/signup">
+            <Register />
           </Route>
           <Route path="/signin">
-            <Signin />
+            <Connection />
           </Route>
           <Route path="/">
-            <Connection />
+            <Home />
           </Route>
         </Switch>
       </Router>
