@@ -1,9 +1,15 @@
-# codeName
+# Board Game
 
-Code name game in react
+web site for boards games in MERN with :
 
-## Avaliable Scripts
+- Code name
 
-To install project run :
+## Avaliable Client Scripts
+
+To install client project run :
 
 - npm install
+
+To launch client project run :
+
+- npm start

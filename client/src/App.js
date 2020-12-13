@@ -13,9 +13,6 @@ function App() {
     <div className="App">
       <Router>
         <Switch>
-          <Route path="/about">
-            <Home />
-          </Route>
           <Route path="/codename/rules">
             <Rules />
           </Route>

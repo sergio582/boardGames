@@ -14,7 +14,7 @@ class Navhome extends Component {
     return (
       <div>
         <Navbar bg="dark" variant="dark">
-          <Navbar.Brand href="/">
+          <Navbar.Brand href="/home">
             <img alt="Logo" src={logo} width="50" height="50" className="d-inline-block align-center mr-2" /> BoardGames
           </Navbar.Brand>
           <Nav className="mr-auto">

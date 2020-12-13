@@ -17,6 +17,7 @@ class Register extends Component {
       password_confirmation: "",
       errors: "",
       success: false,
+      redirect: false,
     };
   }
 
@@ -34,7 +35,7 @@ class Register extends Component {
       password_confirmation: this.state.password_confirmation,
     };
 
-    registerUser(newUser).then((res) => (res.success ? this.setState({ success: true }) : this.setState({ errors: res.errors })));
+    registerUser(newUser).then((res) => (res.success ? this.setState({ success: true }) : this.setState({ success: false, errors: res.errors })));
   };
 
   render() {

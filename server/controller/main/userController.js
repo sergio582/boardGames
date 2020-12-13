@@ -1,6 +1,8 @@
-const User = require("../model/main/User");
+const User = require("../../model/main/User");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+
+const emailRegexp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 
 const createJWT = (email, userId, duration) => {
   const payload = {
@@ -8,18 +10,20 @@ const createJWT = (email, userId, duration) => {
     userId,
     duration,
   };
-  console.log(payload);
   return jwt.sign(payload, process.env.TOKEN_SECRET, {
     expiresIn: duration,
   });
 };
 
-const emailRegexp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+exports.getUsers = (req, res) => {
+  User.find({}, (err, users) => {
+    err === null ? res.json(users) : res.json({ message: err });
+  });
+};
 
 exports.signup = (req, res, next) => {
   let { pseudo, email, password, password_confirmation } = req.body;
 
-  let errors = [];
   if (!emailRegexp.test(email)) {
     return res.json({ errors: "Email invalide" });
   }
@@ -84,7 +88,7 @@ exports.signin = (req, res) => {
           .compare(password, user.password)
           .then((isMatch) => {
             if (!isMatch) {
-              return res.json({ errors: "Mot de passe incorrect" });
+              return res.json({ errors: "Mot de passe incorrect !" });
             }
             let access_token = createJWT(user.email, user._id, 3600);
             jwt.verify(access_token, process.env.TOKEN_SECRET, (err, decoded) => {
