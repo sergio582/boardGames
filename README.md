@@ -1,15 +1,16 @@
-# Board Game
+# Board Game 🎲
 
-web site for boards games in MERN with :
+React web site / node REST api for board games with :
 
-- Code name
+- Code name ⁉
+- and more comming soon ... 🤫
 
-## Avaliable Client Scripts
+## Avaliable Client Scripts 🖥️
 
-To install client project run :
+- To install client project run : `npm install`
+- To launch client project run : `npm start`
 
-- npm install
+## Avaliable Server Scripts 🖥️
 
-To launch client project run :
-
-- npm start
+- To install server project run : `npm install`
+- To launch server project run : `npm start`
