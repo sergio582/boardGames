@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { Container, Card, Button, Col, Row, Form } from "react-bootstrap";
+import { Redirect } from "react-router-dom";
 
 import { connectUser } from "../../../services/api/main/userApi";
+import { login } from "../../../services/auth";
 
 import logo from "../mainLogo.svg";
 
@@ -14,7 +16,7 @@ class Connection extends Component {
       email: "",
       password: "",
       errors: "",
-      success: false,
+      login: false,
     };
   }
 
@@ -32,12 +34,13 @@ class Connection extends Component {
 
     connectUser(userData).then((res) => {
       if (res.errors) {
-        this.setState({ errors: res.errors, success: false });
+        this.setState({ errors: res.errors, login: false });
       } else {
-        localStorage.setItem("USER_ID", res.message._id);
-        localStorage.setItem("USER_NAME", res.message.pseudo);
-        localStorage.setItem("TOKEN", res.token);
-        this.setState({ success: true });
+        let user_id = res.message._id;
+        let user_name = res.message.pseudo;
+        let token = res.token;
+        login(user_id, user_name, token);
+        this.setState({ errors: res.errors, login: true });
       }
     });
   };
@@ -45,6 +48,7 @@ class Connection extends Component {
   render() {
     return (
       <Container>
+        {this.state.login ? <Redirect to="/home" /> : ""}
         <Row className="mt-5">
           <Col className="d-flex justify-content-center">
             <Card style={{ width: "30%" }}>
@@ -76,27 +80,6 @@ class Connection extends Component {
             </span>
           </Col>
         </Row>
-        {this.state.success ? (
-          <div>
-            <Row className="mt-3">
-              <Col>
-                <span>Bienvenue : {localStorage.getItem("USER_NAME")}</span>
-              </Col>
-            </Row>
-            <Row className="mt-3">
-              <Col>
-                <span>id : {localStorage.getItem("USER_ID")}</span>
-              </Col>
-            </Row>
-            <Row className="mt-3">
-              <Col>
-                <span>Token : {localStorage.getItem("TOKEN")}</span>
-              </Col>
-            </Row>
-          </div>
-        ) : (
-          ""
-        )}
       </Container>
     );
   }

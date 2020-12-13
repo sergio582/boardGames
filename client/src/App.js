@@ -19,14 +19,14 @@ function App() {
           <Route path="/codename/">
             <Table />
           </Route>
-          <Route path="/home">
-            <Home />
-          </Route>
           <Route path="/signup">
             <Register />
           </Route>
-          <Route path="/">
+          <Route path="/signin">
             <Connection />
+          </Route>
+          <Route path="/">
+            <Home />
           </Route>
         </Switch>
       </Router>

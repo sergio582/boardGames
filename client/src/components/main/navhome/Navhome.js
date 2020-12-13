@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-import { Navbar, Nav } from "react-bootstrap";
+import { Navbar, Nav, Button } from "react-bootstrap";
+
+import { isLogin, logout } from "../../../services/auth";
 
 import logo from "../mainLogo.svg";
 
@@ -20,6 +22,15 @@ class Navhome extends Component {
           <Nav className="mr-auto">
             <Nav.Link href="/codename/rules">Code Name (Règles)</Nav.Link>
           </Nav>
+          {isLogin() ? (
+            <Button variant="danger" onClick={logout()} href="/">
+              Déconnexion
+            </Button>
+          ) : (
+            <Button variant="success" href="/signin">
+              Connexion
+            </Button>
+          )}
         </Navbar>
       </div>
     );
