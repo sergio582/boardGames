@@ -17,7 +17,6 @@ class Register extends Component {
       password_confirmation: "",
       errors: "",
       success: false,
-      redirect: false,
     };
   }
 
@@ -72,7 +71,7 @@ class Register extends Component {
           <Col>
             <span>
               Déjà un compte ?
-              <a href="/" className="link-connect ml-1 mr-1">
+              <a href="/signin" className="link-connect ml-1 mr-1">
                 Se connecter
               </a>
             </span>
