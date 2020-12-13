@@ -2,10 +2,10 @@ import React, { Component } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import Navhome from "../../main/navhome/Navhome";
 
-import "./Rules.css";
+import "./RulesCodeName.css";
 import codename from "../../codename/assets/image/logo/logo.svg";
 
-class Rules extends Component {
+class RulesCodeName extends Component {
   constructor(props) {
     super(props);
   }
@@ -46,4 +46,4 @@ class Rules extends Component {
   }
 }
 
-export default Rules;
+export default RulesCodeName;

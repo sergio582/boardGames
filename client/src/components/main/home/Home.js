@@ -1,15 +1,13 @@
 import React, { Component } from "react";
 import { Card, Button, Container, Row, Col } from "react-bootstrap";
+import { isLogin } from "../../../services/auth";
+
 import Navhome from "../navhome/Navhome";
 
 import "./Home.css";
 import codename from "../../codename/assets/image/logo/logo.svg";
 
 class Home extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <div>
@@ -24,9 +22,15 @@ class Home extends Component {
                 <Card.Body>
                   <Card.Text>Prêt pour une partie entre amis ?</Card.Text>
                 </Card.Body>
-                <Card.Footer className="text-muted">
-                  <Button variant="success">Go !</Button>
-                </Card.Footer>
+                {isLogin() ? (
+                  <Card.Footer className="text-muted">
+                    <Button variant="success" href="/codename">
+                      Go !
+                    </Button>
+                  </Card.Footer>
+                ) : (
+                  ""
+                )}
               </Card>
             </Col>
           </Row>

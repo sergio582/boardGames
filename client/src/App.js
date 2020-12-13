@@ -3,8 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Connection from "./components/main/connection/Connection";
 import Register from "./components/main/register/Register";
 import Home from "./components/main/home/Home";
-import Rules from "./components/codename/rules/Rules";
-import Table from "./components/codename/table/Table";
+import HomeCodeName from "./components/codename/home/HomeCodeName";
 
 import "./App.css";
 
@@ -13,11 +12,8 @@ function App() {
     <div className="App">
       <Router>
         <Switch>
-          <Route path="/codename/rules">
-            <Rules />
-          </Route>
-          <Route path="/codename/">
-            <Table />
+          <Route path="/codename">
+            <HomeCodeName />
           </Route>
           <Route path="/signup">
             <Register />

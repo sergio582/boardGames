@@ -8,10 +8,6 @@ import logo from "../mainLogo.svg";
 import "./Navhome.css";
 
 class Navhome extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <div>
@@ -23,7 +19,7 @@ class Navhome extends Component {
             <Nav.Link href="/codename/rules">Code Name (Règles)</Nav.Link>
           </Nav>
           {isLogin() ? (
-            <Button variant="danger" onClick={logout()} href="/">
+            <Button variant="danger" onClick={logout} href="/">
               Déconnexion
             </Button>
           ) : (
