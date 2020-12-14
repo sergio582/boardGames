@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Container, Row, Col, Card, Button, Form } from "react-bootstrap";
+import { withRouter } from "react-router-dom";
+
 import { codenameJoin } from "../../../services/socket/codenameSocket";
 
 import Navhome from "../../main/navhome/Navhome";
@@ -28,8 +30,14 @@ class Home extends Component {
     this.setState({ [e.target.id]: e.target.value });
   };
 
-  testSocket(e) {
-    codenameJoin(this.state.id_join);
+  submitSocket(e) {
+    codenameJoin(this.state.id_join, localStorage.getItem("USER_ID"));
+    this.redirectToGame(this.state.id_join);
+  }
+
+  redirectToGame(id) {
+    let path = "/codename/game/" + id;
+    this.props.history.push(path);
   }
 
   render() {
@@ -53,7 +61,7 @@ class Home extends Component {
             <Col className="d-flex justify-content-center">
               <Card border="warning" style={{ width: "20rem" }}>
                 <Card.Body>
-                  <Form onSubmit={this.testSocket.bind(this)}>
+                  <Form onSubmit={this.submitSocket.bind(this)}>
                     <Form.Group>
                       <Form.Control type="text" placeholder="Code de la partie" onChange={this.onChange} id="id_join" required />
                     </Form.Group>
@@ -72,4 +80,4 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default withRouter(Home);

@@ -21,6 +21,16 @@ exports.getUsers = (req, res) => {
   });
 };
 
+exports.getUser = (req, res) => {
+  User.findById(req.params.id)
+    .then((user) => {
+      user !== null ? res.json({ success: true, result: user }) : res.json({ error: "Utilisateur non trouvé !" });
+    })
+    .catch((err) => {
+      res.json({ error: err });
+    });
+};
+
 exports.signup = (req, res, next) => {
   let { pseudo, email, password, password_confirmation } = req.body;
 

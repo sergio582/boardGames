@@ -18,7 +18,7 @@ class Navhome extends Component {
           <Nav className="mr-auto">
             {isLogin() ? (
               <div className="username-div d-flex justify-content-center">
-                <span>{localStorage.getItem("USER_NAME")}</span>
+                <span>Bienvenue {localStorage.getItem("USER_NAME").toUpperCase()}</span>
               </div>
             ) : (
               ""

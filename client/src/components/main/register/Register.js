@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Container, Card, Button, Col, Row, Form } from "react-bootstrap";
+import { withRouter } from "react-router-dom";
 
 import { registerUser } from "../../../services/api/main/userApi";
 
@@ -34,18 +35,23 @@ class Register extends Component {
       password_confirmation: this.state.password_confirmation,
     };
 
-    registerUser(newUser).then((res) => (res.success ? this.setState({ success: true }) : this.setState({ success: false, errors: res.errors })));
+    registerUser(newUser).then((res) => (res.success ? this.setState({ success: true }, () => setTimeout(this.redirectToLogin.bind(this), 1000)) : this.setState({ success: false, errors: res.errors })));
   };
+
+  redirectToLogin() {
+    let path = "/signin";
+    this.props.history.push(path);
+  }
 
   render() {
     return (
       <Container>
         <Row className="mt-5">
           <Col className="d-flex justify-content-center">
-            <Card style={{ width: "30%" }}>
+            <Card style={{ width: "40%" }}>
               <Card.Img variant="top" src={logo} alt="logo" className="logo-style mt-3" />
               <Card.Body>
-                <Card.Title>{this.state.success ? <span className="success-title">Inscription réussie !</span> : this.state.errors ? <span className="error-title">{this.state.errors}</span> : "Inscription à Bord Games"}</Card.Title>
+                <Card.Title>{this.state.success ? <span className="success-title">Inscription réussie ! Redirection ...</span> : this.state.errors ? <span className="error-title">{this.state.errors}</span> : "Inscription à Bord Games"}</Card.Title>
                 <Form onSubmit={this.onSubmit}>
                   <Form.Group>
                     <Form.Control type="text" placeholder="Pseudo" onChange={this.onChange} value={this.state.pseudo} id="pseudo" required />
@@ -82,4 +88,4 @@ class Register extends Component {
   }
 }
 
-export default Register;
+export default withRouter(Register);

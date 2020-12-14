@@ -35,14 +35,14 @@ app.use("/word", wordRoutes);
 app.use("/codename/game", gameCodeNameRoutes);
 
 //DB
-mongoose.connect(process.env.MONGO_DB_CONNECTION, { useUnifiedTopology: true, useNewUrlParser: true }, () => console.log("db connecter !"));
+mongoose.connect(process.env.MONGO_DB_CONNECTION, { useUnifiedTopology: true, useNewUrlParser: true }, () => console.log("database connected"));
 
 //SOCKET IO
 io.on("connection", (socket) => {
   console.log("socket io client connected");
 
-  socket.on("codenameJoin", ({ id }) => {
-    socket.broadcast.emit("codename_" + id, { message: id });
+  socket.on("codenameJoin", ({ id_game, id_user }) => {
+    socket.broadcast.emit("codename_" + id_game, { player_join: id_user });
   });
 
   socket.on("disconnect", () => {

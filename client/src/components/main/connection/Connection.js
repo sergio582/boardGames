@@ -51,7 +51,7 @@ class Connection extends Component {
         {this.state.login ? <Redirect to="/home" /> : ""}
         <Row className="mt-5">
           <Col className="d-flex justify-content-center">
-            <Card style={{ width: "30%" }}>
+            <Card style={{ width: "40%" }}>
               <Card.Img variant="top" src={logo} alt="logo" className="logo-style mt-3" />
               <Card.Body>
                 <Card.Title>{this.state.errors ? <span className="error-title">{this.state.errors}</span> : "Connexion à Boar Games"}</Card.Title>

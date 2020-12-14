@@ -1,7 +1,7 @@
 //IMPORTS
 const express = require("express");
 
-const { getGames, getGameById, createGame } = require("../../controller/codename/gameCodeNameController");
+const { getGames, getGameById, createGame, deleteGame, updateGame } = require("../../controller/codename/gameCodeNameController");
 
 //MIDDLEWARE
 const router = express.Router();
@@ -15,5 +15,11 @@ router.get("/:id", getGameById);
 
 //POST GAME
 router.post("/", createGame);
+
+//DELETE GAME
+router.delete("/:id", deleteGame);
+
+//UPDATE GAME
+router.put("/:id", updateGame);
 
 module.exports = router;

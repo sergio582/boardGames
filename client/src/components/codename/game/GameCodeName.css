@@ -1,0 +1,24 @@
+.round-div {
+  background-color: white;
+  border-radius: 15px;
+  height: 35px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+}
+
+.num-players {
+  background-color: #229954;
+  color: white;
+  border-radius: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.join-players {
+  background-color: #884ea0;
+  color: white;
+  border-radius: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+}

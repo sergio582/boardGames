@@ -1,12 +1,12 @@
 import { io } from "socket.io-client";
 const socket = io("http://localhost:3800");
 
-export { codenameJoin, codenameReciveMessage };
+export { codenameJoin, codenameRecivePlayer };
 
-function codenameJoin(id) {
-  socket.emit("codenameJoin", { id: id });
+function codenameJoin(idGame, idUser) {
+  socket.emit("codenameJoin", { id_game: idGame, id_user: idUser });
 }
 
-function codenameReciveMessage(id, callback) {
-  socket.on("codename_" + id, ({ message }) => callback(null, message));
+function codenameRecivePlayer(id, callback) {
+  socket.on("codename_" + id, ({ player_join }) => callback(null, player_join));
 }
