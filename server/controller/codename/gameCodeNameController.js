@@ -7,9 +7,13 @@ exports.getGames = (req, res) => {
 };
 
 exports.getGameById = (req, res) => {
-  Game.findById(req.params.id, (err, game) => {
-    err === null ? res.json(game) : res.json({ message: err });
-  });
+  Game.findById(req.params.id)
+    .then((game) => {
+      res.json({ success: true, result: game });
+    })
+    .catch((err) => {
+      res.json({ error: err });
+    });
 };
 
 exports.createGame = function (req, res) {

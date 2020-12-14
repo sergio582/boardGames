@@ -3,6 +3,14 @@ const app = express();
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const http = require("http");
+const server = http.createServer(app);
+const io = require("socket.io")(server, {
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"],
+  },
+});
 require("dotenv/config");
 
 //ROUTES
@@ -13,6 +21,7 @@ const gameCodeNameRoutes = require("./routes/codename/gameCodeNameRoutes");
 
 //MIDDLEWARE
 app.use(cors());
+
 app.use(
   bodyParser.urlencoded({
     extended: true,
@@ -28,5 +37,18 @@ app.use("/codename/game", gameCodeNameRoutes);
 //DB
 mongoose.connect(process.env.MONGO_DB_CONNECTION, { useUnifiedTopology: true, useNewUrlParser: true }, () => console.log("db connecter !"));
 
+//SOCKET IO
+io.on("connection", (socket) => {
+  console.log("socket io client connected");
+
+  socket.on("codenameJoin", ({ id }) => {
+    socket.broadcast.emit("codename_" + id, { message: id });
+  });
+
+  socket.on("disconnect", () => {
+    console.log("socket io client diconnected");
+  });
+});
+
 //SERVER START
-app.listen(3800);
+server.listen(3800);

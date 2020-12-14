@@ -15,7 +15,15 @@ class Navhome extends Component {
           <Navbar.Brand href="/">
             <img alt="Logo" src={logo} width="50" height="50" className="d-inline-block align-center mr-2" /> BoardGames
           </Navbar.Brand>
-          <Nav className="mr-auto"></Nav>
+          <Nav className="mr-auto">
+            {isLogin() ? (
+              <div className="username-div d-flex justify-content-center">
+                <span>{localStorage.getItem("USER_NAME")}</span>
+              </div>
+            ) : (
+              ""
+            )}
+          </Nav>
           {isLogin() ? (
             <Button variant="danger" onClick={logout} href="/">
               Déconnexion

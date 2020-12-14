@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Container, Row, Col, Card, Button, Form } from "react-bootstrap";
+import { codenameJoin } from "../../../services/socket/codenameSocket";
 
 import Navhome from "../../main/navhome/Navhome";
 import ModalCreate from "../modal/ModalCreate";
@@ -11,6 +12,7 @@ class Home extends Component {
     super(props);
     this.state = {
       showModal: false,
+      id_join: "",
     };
   }
 
@@ -20,6 +22,14 @@ class Home extends Component {
 
   hideModal(e) {
     this.setState({ showModal: false });
+  }
+
+  onChange = (e) => {
+    this.setState({ [e.target.id]: e.target.value });
+  };
+
+  testSocket(e) {
+    codenameJoin(this.state.id_join);
   }
 
   render() {
@@ -43,11 +53,13 @@ class Home extends Component {
             <Col className="d-flex justify-content-center">
               <Card border="warning" style={{ width: "20rem" }}>
                 <Card.Body>
-                  <Form>
-                    <Form.Group controlId="formBasicPassword">
-                      <Form.Control type="text" placeholder="Code de la partie" />
+                  <Form onSubmit={this.testSocket.bind(this)}>
+                    <Form.Group>
+                      <Form.Control type="text" placeholder="Code de la partie" onChange={this.onChange} id="id_join" required />
                     </Form.Group>
-                    <Button variant="info">Rejoindre une partie</Button>
+                    <Button variant="info" type="submit">
+                      Rejoindre une partie
+                    </Button>
                   </Form>
                 </Card.Body>
               </Card>
