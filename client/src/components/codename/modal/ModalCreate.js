@@ -13,7 +13,6 @@ class ModalCreate extends Component {
       id: "",
       name: "",
       num_players: 0,
-      admin: "",
       errors: "",
     };
   }
@@ -28,9 +27,11 @@ class ModalCreate extends Component {
     const newGame = {
       name: this.state.name,
       num_players: parseInt(this.state.players),
-      admin: localStorage.getItem("USER_ID"),
+      admin: { id: localStorage.getItem("USER_ID"), pseudo: localStorage.getItem("USER_NAME") },
+      players: [{ id: localStorage.getItem("USER_ID"), pseudo: localStorage.getItem("USER_NAME"), team: "", is_mg: false }],
     };
-    createGame(newGame).then((res) => (res.success ? this.setState({ id: res.result._id }, () => setTimeout(this.redirectToAdmin.bind(this), 500)) : this.setState({ id: "" })));
+    console.log(newGame);
+    createGame(newGame).then((res) => (res.success ? this.setState({ id: res.result._id }, () => setTimeout(this.redirectToAdmin.bind(this), 500)) : console.log(res)));
   };
 
   redirectToAdmin() {
@@ -53,7 +54,10 @@ class ModalCreate extends Component {
               <Form.Group>
                 <Form.Label>Nombre de joueurs</Form.Label>
                 <Form.Control as="select" onChange={this.onChange} id="players" required>
-                  <option defaultValue>2</option>
+                  <option defaultValue hidden>
+                    0
+                  </option>
+                  <option>2</option>
                   <option>3</option>
                   <option>4 ou +</option>
                 </Form.Control>

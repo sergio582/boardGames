@@ -1,11 +1,12 @@
 const mongoose = require("mongoose");
 
-const wordSchema = mongoose.Schema({
+const codeNameGameSchema = mongoose.Schema({
   id: String,
   name: String,
   num_players: Number,
-  admin: String,
+  admin: Object,
   players: Array,
+  deck: Array,
 });
 
-module.exports = mongoose.model("GameCodeName", wordSchema);
+module.exports = mongoose.model("GameCodeName", codeNameGameSchema);

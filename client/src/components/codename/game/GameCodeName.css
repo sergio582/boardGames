@@ -15,10 +15,37 @@
   padding-right: 10px;
 }
 
-.join-players {
-  background-color: #884ea0;
+.button-blue-team {
+  width: 75px;
+  background-color: #07709c !important;
+  border-color: #07709c !important;
+}
+
+.button-red-team {
+  width: 75px;
+  background-color: #d40d26 !important;
+  border-color: #d40d26 !important;
+}
+
+.div-team-blue {
+  width: 22px;
+  height: 22px;
+  border-radius: 22px;
+  background-color: #07709c;
+}
+
+.div-team-red {
+  width: 22px;
+  height: 22px;
+  border-radius: 22px;
+  background-color: #d40d26;
+}
+
+.is-mg-div {
+  background-color: #403d3a;
   color: white;
-  border-radius: 10px;
-  padding-left: 10px;
-  padding-right: 10px;
+  font-size: 15px;
+  border-radius: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
 }

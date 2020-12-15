@@ -49,6 +49,10 @@ io.on("connection", (socket) => {
     socket.broadcast.emit("codename_" + id_game, { refresh: "quit" });
   });
 
+  socket.on("codenameUpdateParam", ({ id_game }) => {
+    socket.broadcast.emit("codename_" + id_game, { refresh: "team_update" });
+  });
+
   socket.on("disconnect", () => {
     console.log("socket io client diconnected");
   });

@@ -35,7 +35,7 @@ class Home extends Component {
 
   joinPlayerToGame() {
     let game_param = this.state.game_param;
-    game_param.players = [...game_param.players, localStorage.getItem("USER_ID")];
+    game_param.players = [...game_param.players, { id: localStorage.getItem("USER_ID"), pseudo: localStorage.getItem("USER_NAME"), team: "", is_mg: false }];
     this.setState({ game_param: game_param }, () => updateGame(game_param._id, game_param).then(() => codenameJoin(this.state.id_join).then((res) => this.redirectToGame(this.state.id_join))));
   }
 
@@ -76,14 +76,14 @@ class Home extends Component {
               <Card border="warning" style={{ width: "20rem" }}>
                 <Card.Body>
                   <Card.Title className="error-div">{this.state.error}</Card.Title>
-                  <Form>
+                  <div>
                     <Form.Group>
                       <Form.Control type="text" placeholder="Code de la partie" onChange={this.onChange} id="id_join" required />
                     </Form.Group>
                     <Button variant="info" onClick={this.submitSocket.bind(this)}>
                       Rejoindre une partie
                     </Button>
-                  </Form>
+                  </div>
                 </Card.Body>
               </Card>
             </Col>
