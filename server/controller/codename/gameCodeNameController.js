@@ -9,10 +9,10 @@ exports.getGames = (req, res) => {
 exports.getGameById = (req, res) => {
   Game.findById(req.params.id)
     .then((game) => {
-      game !== null ? res.json({ success: true, result: game }) : res.json({ error: "Partie non trouvé !" });
+      game !== null ? res.json({ success: true, result: game }) : res.json({ success: false, error: "Partie non trouvé !" });
     })
     .catch((err) => {
-      res.json({ error: err });
+      res.json({ error: "Partie non trouvé !" });
     });
 };
 

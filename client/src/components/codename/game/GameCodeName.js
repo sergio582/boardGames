@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Container, Navbar, Nav, Card, Button, Row, Col } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
 
-import { codenameRecivePlayer } from "../../../services/socket/codenameSocket";
+import { codenameGameUpdate, codenameQuit } from "../../../services/socket/codenameSocket";
 import { getGame, deleteGame, updateGame } from "../../../services/api/codename/gameCodeNameApi";
 import { getUser } from "../../../services/api/main/userApi";
 
@@ -17,7 +17,7 @@ class GameCodeName extends Component {
       admin: {},
       players: [],
       error: null,
-      socket: "",
+      refresh: "",
     };
   }
 
@@ -31,24 +31,33 @@ class GameCodeName extends Component {
   componentDidMount() {
     getGame(this.props.match.params.idGame).then((res) => (res.success ? this.setState({ game_param: res.result }, this.getAdminAndSetState) : this.setState({ error: res.error })));
 
-    codenameRecivePlayer(this.props.match.params.idGame, (err, player_join) => {
-      this.setUsersPlayersInGameParams(player_join);
+    codenameGameUpdate(this.props.match.params.idGame, (err, refresh) => {
+      getGame(this.props.match.params.idGame).then((res) => (res.success ? this.setState({ game_param: res.result }) : this.setState({ error: res.error })));
     });
   }
-
-  setUsersPlayersInGameParams = (id) => {
-    let game_param = this.state.game_param;
-    game_param.players = [...game_param.players, id];
-    this.setState({ game_param: game_param }, () => updateGame(game_param._id, game_param));
-  };
 
   getAdminAndSetState = () => {
     getUser(this.state.game_param.admin).then((res) => this.setState({ admin: res.result }));
   };
 
+  playerQuitGame() {
+    let game_param = this.state.game_param;
+    let index = this.state.game_param.players.indexOf(localStorage.getItem("USER_ID"));
+    if (index > -1) {
+      game_param.players.splice(index, 1);
+    }
+    this.setState({ game_param: game_param }, () => updateGame(game_param._id, game_param).then(codenameQuit(this.state.game_param._id).then(() => this.redirectToMain())));
+  }
+
+  adminQuitGame() {
+    deleteGame(this.state.game_param._id).then((res) => (res.success ? codenameQuit(this.state.game_param._id).then(() => this.redirectToMain()) : this.setState({ error: "Partie non supprimé !" })));
+  }
+
   quitGame = (e) => {
     if (this.state.game_param.admin === localStorage.getItem("USER_ID")) {
-      deleteGame(this.state.game_param._id).then((res) => (res.success ? this.redirectToMain() : this.setState({ error: "Partie non supprimé !" })));
+      this.adminQuitGame();
+    } else {
+      this.playerQuitGame();
     }
   };
 

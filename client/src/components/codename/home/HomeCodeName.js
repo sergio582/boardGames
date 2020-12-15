@@ -3,6 +3,7 @@ import { Container, Row, Col, Card, Button, Form } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
 
 import { codenameJoin } from "../../../services/socket/codenameSocket";
+import { getGame, updateGame } from "../../../services/api/codename/gameCodeNameApi";
 
 import Navhome from "../../main/navhome/Navhome";
 import ModalCreate from "../modal/ModalCreate";
@@ -15,6 +16,8 @@ class Home extends Component {
     this.state = {
       showModal: false,
       id_join: "",
+      game_param: {},
+      error: "",
     };
   }
 
@@ -30,15 +33,26 @@ class Home extends Component {
     this.setState({ [e.target.id]: e.target.value });
   };
 
-  submitSocket(e) {
-    codenameJoin(this.state.id_join, localStorage.getItem("USER_ID"));
-    this.redirectToGame(this.state.id_join);
+  joinPlayerToGame() {
+    let game_param = this.state.game_param;
+    game_param.players = [...game_param.players, localStorage.getItem("USER_ID")];
+    this.setState({ game_param: game_param }, () => updateGame(game_param._id, game_param).then(() => codenameJoin(this.state.id_join).then((res) => this.redirectToGame(this.state.id_join))));
   }
 
-  redirectToGame(id) {
+  submitSocket(e) {
+    if (this.state.id_join !== "") {
+      getGame(this.state.id_join).then((res) => {
+        res.success ? this.setState({ game_param: res.result }, this.joinPlayerToGame) : this.setState({ error: res.error });
+      });
+    } else {
+      this.setState({ error: "Champ vide !" });
+    }
+  }
+
+  redirectToGame = (id) => {
     let path = "/codename/game/" + id;
     this.props.history.push(path);
-  }
+  };
 
   render() {
     return (
@@ -61,11 +75,12 @@ class Home extends Component {
             <Col className="d-flex justify-content-center">
               <Card border="warning" style={{ width: "20rem" }}>
                 <Card.Body>
-                  <Form onSubmit={this.submitSocket.bind(this)}>
+                  <Card.Title className="error-div">{this.state.error}</Card.Title>
+                  <Form>
                     <Form.Group>
                       <Form.Control type="text" placeholder="Code de la partie" onChange={this.onChange} id="id_join" required />
                     </Form.Group>
-                    <Button variant="info" type="submit">
+                    <Button variant="info" onClick={this.submitSocket.bind(this)}>
                       Rejoindre une partie
                     </Button>
                   </Form>

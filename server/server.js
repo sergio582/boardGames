@@ -41,8 +41,12 @@ mongoose.connect(process.env.MONGO_DB_CONNECTION, { useUnifiedTopology: true, us
 io.on("connection", (socket) => {
   console.log("socket io client connected");
 
-  socket.on("codenameJoin", ({ id_game, id_user }) => {
-    socket.broadcast.emit("codename_" + id_game, { player_join: id_user });
+  socket.on("codenameJoin", ({ id_game }) => {
+    socket.broadcast.emit("codename_" + id_game, { refresh: "join" });
+  });
+
+  socket.on("codenameQuit", ({ id_game }) => {
+    socket.broadcast.emit("codename_" + id_game, { refresh: "quit" });
   });
 
   socket.on("disconnect", () => {
