@@ -4,6 +4,7 @@ import { withRouter } from "react-router-dom";
 
 import { codenameGameUpdate, codenameQuit, codenameUpdateParam } from "../../../services/socket/codenameSocket";
 import { getGame, deleteGame, updateGame } from "../../../services/api/codename/gameCodeNameApi";
+import { getListWords } from "../../../services/api/codename/wordApi";
 
 import "./GameCodeName.css";
 import logo from "../assets/image/logo/logo.svg";
@@ -15,6 +16,7 @@ class GameCodeName extends Component {
       game_param: {},
       admin: {},
       players: [],
+      deck: [],
       error: null,
       refresh: "",
     };
@@ -22,31 +24,69 @@ class GameCodeName extends Component {
 
   componentWillUnmount() {
     // fix Warning: Can't perform a React state update on an unmounted component
-    // this.setState = (state, callback) => {
-    //   return;
-    // };
+    this.setState = (state, callback) => {
+      return;
+    };
   }
 
   componentDidMount() {
-    getGame(this.props.match.params.idGame).then((res) => (res.success ? this.setState({ game_param: res.result }, this.getAllPlayersAndSetState) : this.setState({ error: res.error })));
+    getGame(this.props.match.params.idGame).then((res) => (res.success ? this.setState({ game_param: res.result }, this.getAllGameParamsAndSetState) : this.setState({ error: res.error })));
 
     codenameGameUpdate(this.props.match.params.idGame, (err, refresh) => {
-      getGame(this.props.match.params.idGame).then((res) => (res.success ? this.setState({ game_param: res.result }, this.getAllPlayersAndSetState) : this.setState({ error: res.error })));
+      getGame(this.props.match.params.idGame).then((res) => (res.success ? this.setState({ game_param: res.result }, this.getAllGameParamsAndSetState) : this.setState({ error: res.error })));
     });
   }
 
-  getAllPlayersAndSetState = () => {
-    this.getAdminAndSetState();
+  getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min) + min);
+  }
+
+  async generateList() {
+    const list = [];
+    for (let i = 1; i < 26; i++) {
+      let a = this.getRandomInt(1, 1630);
+      list.push(a);
+      for (let y = 0; y < list.length - 1; y++) {
+        if (a === list[y]) {
+          i = i - 1;
+          list.pop();
+          break;
+        }
+      }
+    }
+    return list;
+  }
+
+  generateDeckAndSetToGameParam() {
+    let game_param = this.state.game_param;
+    this.generateList().then((res) => {
+      getListWords(res).then((data) => {
+        game_param.deck = data;
+        this.setState({ game_param: game_param }, () => updateGame(game_param._id, game_param));
+        //this.setState({ card_deck: data });
+      });
+    });
+  }
+
+  getAllGameParamsAndSetState = () => {
     this.getPlayersAndSetState();
+    this.getAdminAndSetState();
+    this.getDeckAndSetState();
   };
 
-  getAdminAndSetState = () => {
+  getAdminAndSetState() {
     this.setState({ admin: this.state.game_param.admin });
-  };
+  }
 
-  getPlayersAndSetState = () => {
+  getPlayersAndSetState() {
     this.setState({ players: this.state.game_param.players });
-  };
+  }
+
+  getDeckAndSetState() {
+    this.setState({ deck: this.state.game_param.deck });
+  }
 
   playerQuitGame() {
     let game_param = this.state.game_param;
@@ -134,33 +174,46 @@ class GameCodeName extends Component {
                   <Card.Body>
                     <Card.Text>{this.state.admin.pseudo}</Card.Text>
                   </Card.Body>
+                  {this.state.admin.id === localStorage.getItem("USER_ID") ? (
+                    <Card.Footer>
+                      <Button variant="success" onClick={this.generateDeckAndSetToGameParam.bind(this)}>
+                        Lancer la partie
+                      </Button>
+                    </Card.Footer>
+                  ) : (
+                    ""
+                  )}
                 </Card>
               </Col>
             </Row>
             <Row className="mt-3">
               {this.state.players.map((player, index) => (
                 <Col className="d-flex justify-content-center" key={index}>
-                  <Card border="info" style={{ width: "18rem" }}>
+                  <Card border="info" style={{ width: "18rem" }} className="mb-2">
                     <Card.Header>{player.pseudo}</Card.Header>
-                    <Card.Body>
-                      <Row>
-                        <Col>
-                          <Button className="button-blue-team mr-1" onClick={this.handleChangeTeam} id={index} value="blue" disabled={player.team === "blue" || this.state.admin.id !== localStorage.getItem("USER_ID")}>
-                            Bleu
-                          </Button>
-                          <Button className="button-red-team" onClick={this.handleChangeTeam} id={index} value="red" disabled={player.team === "red" || this.state.admin.id !== localStorage.getItem("USER_ID")}>
-                            Rouge
-                          </Button>
-                        </Col>
-                      </Row>
-                      <Row className="mt-1">
-                        <Col>
-                          <Button variant="outline-dark" onClick={this.handleSetMG} id={index} disabled={this.state.admin.id !== localStorage.getItem("USER_ID")}>
-                            Maître-Espion
-                          </Button>
-                        </Col>
-                      </Row>
-                    </Card.Body>
+                    {this.state.admin.id === localStorage.getItem("USER_ID") ? (
+                      <Card.Body>
+                        <Row>
+                          <Col>
+                            <Button className="button-blue-team mr-1" onClick={this.handleChangeTeam} id={index} value="blue" disabled={player.team === "blue" || this.state.admin.id !== localStorage.getItem("USER_ID")}>
+                              Bleu
+                            </Button>
+                            <Button className="button-red-team" onClick={this.handleChangeTeam} id={index} value="red" disabled={player.team === "red" || this.state.admin.id !== localStorage.getItem("USER_ID")}>
+                              Rouge
+                            </Button>
+                          </Col>
+                        </Row>
+                        <Row className="mt-1">
+                          <Col>
+                            <Button variant="outline-dark" onClick={this.handleSetMG} id={index}>
+                              Maître-Espion
+                            </Button>
+                          </Col>
+                        </Row>
+                      </Card.Body>
+                    ) : (
+                      ""
+                    )}
                     <Card.Footer>
                       <Row>
                         <Col>
