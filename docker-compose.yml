@@ -1,0 +1,43 @@
+version: "3.5"
+
+services:
+  db:
+    image: mongo
+    container_name: gameboard_db
+    restart: always
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
+      MONGO_INITDB_DATABASE: ${MONGO_DATABASE}
+    networks:
+      - full-network
+
+  client:
+    container_name: gameboard_client
+    build: ./client
+    environment:
+      CHOKIDAR_USEPOLLING: "true"
+    ports:
+      - 3000:3000
+    volumes:
+      - ./client:/client
+    restart: on-failure
+    networks:
+      - full-network
+
+  server:
+    container_name: gameboard_server
+    build: ./server
+    ports:
+      - 3800:3800
+    volumes:
+      - ./server:/server
+    restart: on-failure
+    networks:
+      - full-network
+
+networks:
+  full-network:
+    driver: bridge
